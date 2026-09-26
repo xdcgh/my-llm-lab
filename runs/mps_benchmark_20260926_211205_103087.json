@@ -1,0 +1,889 @@
+{
+  "schema_version": 1,
+  "environment": {
+    "time": "2026-09-26T21:12:05.103163+08:00",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "macos": "27.2",
+    "machine": "arm64",
+    "python": "3.12.9",
+    "python_executable": "/Users/xudacheng/Downloads/my-llm-lab/.venv/bin/python3",
+    "torch": "2.14.0",
+    "device": "mps",
+    "cpu_threads": 16,
+    "mps_built": true,
+    "mps_available": true,
+    "previous_mps_fallback": null,
+    "mps_environment": {},
+    "mps_fallback_for_this_process": "0",
+    "chip": "Apple M1 Ultra",
+    "memory_bytes": "68719476736",
+    "gpu_summary": [
+      {
+        "sppci_cores": "48",
+        "sppci_model": "Apple M1 Ultra"
+      }
+    ]
+  },
+  "options": {
+    "device": "mps",
+    "sizes": [
+      512,
+      1024,
+      2048
+    ],
+    "shapes": null,
+    "dtypes": [
+      "fp32",
+      "fp16",
+      "bf16",
+      "fp8_e4m3fn",
+      "fp8_e5m2",
+      "fp64"
+    ],
+    "backward": true,
+    "conversions": false,
+    "warmup": 3,
+    "repeats": 5,
+    "target_ms": 150.0,
+    "max_iters": 32,
+    "max_estimated_gib": 2.0,
+    "output": null
+  },
+  "notes": [
+    "Effective operator throughput, not hardware peak.",
+    "Direct means no explicit cast in the timed Python code; internal accumulation is not inspected.",
+    "Forward uses preallocated output; backward includes autograd and both operand gradients, no optimizer.",
+    "Conversion routes report useful GEMM FLOPs / end-to-end time, not native low-precision FLOPs.",
+    "Sample validation is not exhaustive."
+  ],
+  "probes": [
+    {
+      "dtype": "fp32",
+      "mode": "fwd",
+      "route": "direct",
+      "status": "ok"
+    },
+    {
+      "dtype": "fp32",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "status": "ok"
+    },
+    {
+      "dtype": "fp16",
+      "mode": "fwd",
+      "route": "direct",
+      "status": "ok"
+    },
+    {
+      "dtype": "fp16",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "status": "ok"
+    },
+    {
+      "dtype": "bf16",
+      "mode": "fwd",
+      "route": "direct",
+      "status": "ok"
+    },
+    {
+      "dtype": "bf16",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "status": "ok"
+    },
+    {
+      "dtype": "fp8_e4m3fn",
+      "mode": "fwd",
+      "route": "direct",
+      "status": "unsupported",
+      "error": "TypeError: Trying to convert Float8_e4m3fn to the MPS backend but it does not have support for that dtype."
+    },
+    {
+      "dtype": "fp8_e4m3fn",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "status": "unsupported",
+      "error": "TypeError: Trying to convert Float8_e4m3fn to the MPS backend but it does not have support for that dtype."
+    },
+    {
+      "dtype": "fp8_e5m2",
+      "mode": "fwd",
+      "route": "direct",
+      "status": "unsupported",
+      "error": "TypeError: Trying to convert Float8_e5m2 to the MPS backend but it does not have support for that dtype."
+    },
+    {
+      "dtype": "fp8_e5m2",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "status": "unsupported",
+      "error": "TypeError: Trying to convert Float8_e5m2 to the MPS backend but it does not have support for that dtype."
+    },
+    {
+      "dtype": "fp64",
+      "mode": "fwd",
+      "route": "direct",
+      "status": "unsupported",
+      "error": "TypeError: Cannot convert a MPS Tensor to float64 dtype as the MPS framework doesn't support float64. Please use float32 instead."
+    },
+    {
+      "dtype": "fp64",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "status": "unsupported",
+      "error": "TypeError: Cannot convert a MPS Tensor to float64 dtype as the MPS framework doesn't support float64. Please use float32 instead."
+    }
+  ],
+  "results": [
+    {
+      "dtype": "fp32",
+      "mode": "fwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        512,
+        512,
+        512
+      ],
+      "input_dtype": "torch.float32",
+      "output_dtype": "torch.float32",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 32,
+      "repeats": 5,
+      "median_ms": 0.07733075000260214,
+      "min_ms": 0.07482293750626923,
+      "max_ms": 0.1101198124615621,
+      "samples_ms": [
+        0.1101198124615621,
+        0.10120703126403896,
+        0.07733075000260214,
+        0.07566928121605088,
+        0.07482293750626923
+      ],
+      "effective_tflops": 3.471264095989852,
+      "flops_per_iteration": 268435456,
+      "estimated_bytes": 12582912,
+      "validation": {
+        "sample_relative_l2_error": 3.6671486344351587e-07,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp32",
+      "mode": "fwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        1024,
+        1024,
+        1024
+      ],
+      "input_dtype": "torch.float32",
+      "output_dtype": "torch.float32",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 32,
+      "repeats": 5,
+      "median_ms": 0.24534246875873578,
+      "min_ms": 0.2426731562650275,
+      "max_ms": 0.25048178122233367,
+      "samples_ms": [
+        0.25048178122233367,
+        0.24630600000818959,
+        0.24534246875873578,
+        0.2446328124960928,
+        0.2426731562650275
+      ],
+      "effective_tflops": 8.75300415319366,
+      "flops_per_iteration": 2147483648,
+      "estimated_bytes": 50331648,
+      "validation": {
+        "sample_relative_l2_error": 6.1902895101531e-07,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp32",
+      "mode": "fwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        2048,
+        2048,
+        2048
+      ],
+      "input_dtype": "torch.float32",
+      "output_dtype": "torch.float32",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 32,
+      "repeats": 5,
+      "median_ms": 1.420270812502622,
+      "min_ms": 1.419598937502542,
+      "max_ms": 1.4297968749588108,
+      "samples_ms": [
+        1.4201953125052569,
+        1.420270812502622,
+        1.4225351562799915,
+        1.419598937502542,
+        1.4297968749588108
+      ],
+      "effective_tflops": 12.096192523824245,
+      "flops_per_iteration": 17179869184,
+      "estimated_bytes": 201326592,
+      "validation": {
+        "sample_relative_l2_error": 9.313076306024607e-07,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp32",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        512,
+        512,
+        512
+      ],
+      "input_dtype": "torch.float32",
+      "output_dtype": "torch.float32",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 8,
+      "repeats": 5,
+      "median_ms": 0.3872239999509475,
+      "min_ms": 0.30523437499141437,
+      "max_ms": 0.39604687481187284,
+      "samples_ms": [
+        0.39604687481187284,
+        0.3872239999509475,
+        0.39134374992499943,
+        0.31796350003787666,
+        0.30523437499141437
+      ],
+      "effective_tflops": 2.079691259069722,
+      "flops_per_iteration": 805306368,
+      "estimated_bytes": 18874368,
+      "validation": {
+        "sample_relative_l2_error": 3.6671486344351587e-07,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.0001,
+        "grad_a_sample_relative_l2_error": 3.843127903289024e-07,
+        "grad_b_sample_relative_l2_error": 3.601833015526147e-07,
+        "all_gradients_finite": true,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp32",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        1024,
+        1024,
+        1024
+      ],
+      "input_dtype": "torch.float32",
+      "output_dtype": "torch.float32",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 8,
+      "repeats": 5,
+      "median_ms": 0.8605989999068697,
+      "min_ms": 0.8163593749941356,
+      "max_ms": 0.9003697500702401,
+      "samples_ms": [
+        0.8404010000049311,
+        0.8163593749941356,
+        0.8966771249561134,
+        0.8605989999068697,
+        0.9003697500702401
+      ],
+      "effective_tflops": 7.48600793714282,
+      "flops_per_iteration": 6442450944,
+      "estimated_bytes": 75497472,
+      "validation": {
+        "sample_relative_l2_error": 6.1902895101531e-07,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.0001,
+        "grad_a_sample_relative_l2_error": 5.910163823122678e-07,
+        "grad_b_sample_relative_l2_error": 5.355725318340668e-07,
+        "all_gradients_finite": true,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp32",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        2048,
+        2048,
+        2048
+      ],
+      "input_dtype": "torch.float32",
+      "output_dtype": "torch.float32",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 8,
+      "repeats": 5,
+      "median_ms": 4.3551562500852015,
+      "min_ms": 4.315546874977372,
+      "max_ms": 4.590687500012791,
+      "samples_ms": [
+        4.3551562500852015,
+        4.590687500012791,
+        4.356932375003453,
+        4.32216674994379,
+        4.315546874977372
+      ],
+      "effective_tflops": 11.834158085830264,
+      "flops_per_iteration": 51539607552,
+      "estimated_bytes": 301989888,
+      "validation": {
+        "sample_relative_l2_error": 9.313076306024607e-07,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.0001,
+        "grad_a_sample_relative_l2_error": 7.946404768730148e-07,
+        "grad_b_sample_relative_l2_error": 7.194663524986784e-07,
+        "all_gradients_finite": true,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp16",
+      "mode": "fwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        512,
+        512,
+        512
+      ],
+      "input_dtype": "torch.float16",
+      "output_dtype": "torch.float16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 32,
+      "repeats": 5,
+      "median_ms": 0.07370965624886594,
+      "min_ms": 0.0726953124967622,
+      "max_ms": 0.08107421876957233,
+      "samples_ms": [
+        0.07309506247565878,
+        0.08107421876957233,
+        0.07370965624886594,
+        0.07405859372511259,
+        0.0726953124967622
+      ],
+      "effective_tflops": 3.6417949785803,
+      "flops_per_iteration": 268435456,
+      "estimated_bytes": 12582912,
+      "validation": {
+        "sample_relative_l2_error": 0.0003390657994402661,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.01,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp16",
+      "mode": "fwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        1024,
+        1024,
+        1024
+      ],
+      "input_dtype": "torch.float16",
+      "output_dtype": "torch.float16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 32,
+      "repeats": 5,
+      "median_ms": 0.21524087503621558,
+      "min_ms": 0.2148724062749352,
+      "max_ms": 0.2195377499560891,
+      "samples_ms": [
+        0.21557421877105298,
+        0.2148724062749352,
+        0.2195377499560891,
+        0.21497787503221844,
+        0.21524087503621558
+      ],
+      "effective_tflops": 9.977118182773939,
+      "flops_per_iteration": 2147483648,
+      "estimated_bytes": 50331648,
+      "validation": {
+        "sample_relative_l2_error": 0.0003397828367126287,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.01,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp16",
+      "mode": "fwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        2048,
+        2048,
+        2048
+      ],
+      "input_dtype": "torch.float16",
+      "output_dtype": "torch.float16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 32,
+      "repeats": 5,
+      "median_ms": 1.2853593750037362,
+      "min_ms": 1.280731781207578,
+      "max_ms": 1.296786437535502,
+      "samples_ms": [
+        1.2853593750037362,
+        1.2872604374933871,
+        1.296786437535502,
+        1.2827135312818427,
+        1.280731781207578
+      ],
+      "effective_tflops": 13.365809996873491,
+      "flops_per_iteration": 17179869184,
+      "estimated_bytes": 201326592,
+      "validation": {
+        "sample_relative_l2_error": 0.0003789415645361365,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.01,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp16",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        512,
+        512,
+        512
+      ],
+      "input_dtype": "torch.float16",
+      "output_dtype": "torch.float16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 8,
+      "repeats": 5,
+      "median_ms": 0.3200572498371912,
+      "min_ms": 0.305921874996784,
+      "max_ms": 0.3414531249745778,
+      "samples_ms": [
+        0.305921874996784,
+        0.3260728751683928,
+        0.30811975011602044,
+        0.3200572498371912,
+        0.3414531249745778
+      ],
+      "effective_tflops": 2.5161322494948903,
+      "flops_per_iteration": 805306368,
+      "estimated_bytes": 18874368,
+      "validation": {
+        "sample_relative_l2_error": 0.0003390657994402661,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.01,
+        "grad_a_sample_relative_l2_error": 0.0003895332016936323,
+        "grad_b_sample_relative_l2_error": 0.00034033060386730486,
+        "all_gradients_finite": true,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp16",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        1024,
+        1024,
+        1024
+      ],
+      "input_dtype": "torch.float16",
+      "output_dtype": "torch.float16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 8,
+      "repeats": 5,
+      "median_ms": 0.7255937498484855,
+      "min_ms": 0.7125312499738357,
+      "max_ms": 0.7311093750104192,
+      "samples_ms": [
+        0.7262291248935071,
+        0.7125312499738357,
+        0.7162552499266894,
+        0.7255937498484855,
+        0.7311093750104192
+      ],
+      "effective_tflops": 8.878867748440884,
+      "flops_per_iteration": 6442450944,
+      "estimated_bytes": 75497472,
+      "validation": {
+        "sample_relative_l2_error": 0.0003397828367126287,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.01,
+        "grad_a_sample_relative_l2_error": 0.0004093550614514901,
+        "grad_b_sample_relative_l2_error": 0.0003756329297435312,
+        "all_gradients_finite": true,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "fp16",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        2048,
+        2048,
+        2048
+      ],
+      "input_dtype": "torch.float16",
+      "output_dtype": "torch.float16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 8,
+      "repeats": 5,
+      "median_ms": 3.9664738749252137,
+      "min_ms": 3.941083250083466,
+      "max_ms": 3.988833374933165,
+      "samples_ms": [
+        3.9617499999167194,
+        3.941083250083466,
+        3.9664738749252137,
+        3.988833374933165,
+        3.9780781248737185
+      ],
+      "effective_tflops": 12.993809912077579,
+      "flops_per_iteration": 51539607552,
+      "estimated_bytes": 301989888,
+      "validation": {
+        "sample_relative_l2_error": 0.0003789415645361365,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.01,
+        "grad_a_sample_relative_l2_error": 0.00035890003477590145,
+        "grad_b_sample_relative_l2_error": 0.0003873423950466042,
+        "all_gradients_finite": true,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "bf16",
+      "mode": "fwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        512,
+        512,
+        512
+      ],
+      "input_dtype": "torch.bfloat16",
+      "output_dtype": "torch.bfloat16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 32,
+      "repeats": 5,
+      "median_ms": 0.10369793750442113,
+      "min_ms": 0.10170703126277658,
+      "max_ms": 0.10477474995695957,
+      "samples_ms": [
+        0.10437631249260448,
+        0.10369793750442113,
+        0.10227734372847408,
+        0.10170703126277658,
+        0.10477474995695957
+      ],
+      "effective_tflops": 2.588628688864283,
+      "flops_per_iteration": 268435456,
+      "estimated_bytes": 12582912,
+      "validation": {
+        "sample_relative_l2_error": 0.0030681166188221173,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.05,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "bf16",
+      "mode": "fwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        1024,
+        1024,
+        1024
+      ],
+      "input_dtype": "torch.bfloat16",
+      "output_dtype": "torch.bfloat16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 32,
+      "repeats": 5,
+      "median_ms": 0.4593268125177019,
+      "min_ms": 0.4568333437191541,
+      "max_ms": 0.4610090937262612,
+      "samples_ms": [
+        0.45745443748046455,
+        0.4593268125177019,
+        0.4610090937262612,
+        0.45968096878823417,
+        0.4568333437191541
+      ],
+      "effective_tflops": 4.675284763432439,
+      "flops_per_iteration": 2147483648,
+      "estimated_bytes": 50331648,
+      "validation": {
+        "sample_relative_l2_error": 0.0028957750964561818,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.05,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "bf16",
+      "mode": "fwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        2048,
+        2048,
+        2048
+      ],
+      "input_dtype": "torch.bfloat16",
+      "output_dtype": "torch.bfloat16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 32,
+      "repeats": 5,
+      "median_ms": 2.6948125000103573,
+      "min_ms": 2.692282531256751,
+      "max_ms": 2.695108062482632,
+      "samples_ms": [
+        2.6942864687384827,
+        2.692282531256751,
+        2.6948125000103573,
+        2.694937499995831,
+        2.695108062482632
+      ],
+      "effective_tflops": 6.375163089800856,
+      "flops_per_iteration": 17179869184,
+      "estimated_bytes": 201326592,
+      "validation": {
+        "sample_relative_l2_error": 0.003093494297582096,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.05,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "bf16",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        512,
+        512,
+        512
+      ],
+      "input_dtype": "torch.bfloat16",
+      "output_dtype": "torch.bfloat16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 8,
+      "repeats": 5,
+      "median_ms": 0.5497968747931736,
+      "min_ms": 0.36786987493542256,
+      "max_ms": 0.5552343750423461,
+      "samples_ms": [
+        0.5552343750423461,
+        0.5517968750154978,
+        0.5497968747931736,
+        0.4745468750115833,
+        0.36786987493542256
+      ],
+      "effective_tflops": 1.4647343499414138,
+      "flops_per_iteration": 805306368,
+      "estimated_bytes": 18874368,
+      "validation": {
+        "sample_relative_l2_error": 0.0030681166188221173,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.05,
+        "grad_a_sample_relative_l2_error": 0.002987792963655234,
+        "grad_b_sample_relative_l2_error": 0.0029466789390395175,
+        "all_gradients_finite": true,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "bf16",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        1024,
+        1024,
+        1024
+      ],
+      "input_dtype": "torch.bfloat16",
+      "output_dtype": "torch.bfloat16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 8,
+      "repeats": 5,
+      "median_ms": 1.4083124999615393,
+      "min_ms": 1.3988749999498395,
+      "max_ms": 1.4465990000189777,
+      "samples_ms": [
+        1.3988749999498395,
+        1.4047396250589372,
+        1.4083124999615393,
+        1.4125208749646845,
+        1.4465990000189777
+      ],
+      "effective_tflops": 4.574589051915638,
+      "flops_per_iteration": 6442450944,
+      "estimated_bytes": 75497472,
+      "validation": {
+        "sample_relative_l2_error": 0.0028957750964561818,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.05,
+        "grad_a_sample_relative_l2_error": 0.0033320602929271526,
+        "grad_b_sample_relative_l2_error": 0.0027263365045457743,
+        "all_gradients_finite": true,
+        "passed": true
+      },
+      "status": "ok"
+    },
+    {
+      "dtype": "bf16",
+      "mode": "fwd_bwd",
+      "route": "direct",
+      "shape_m_k_n": [
+        2048,
+        2048,
+        2048
+      ],
+      "input_dtype": "torch.bfloat16",
+      "output_dtype": "torch.bfloat16",
+      "input_device": "mps:0",
+      "compute_device": "mps",
+      "accumulator_dtype": "not_inspected",
+      "native_hardware_support": "not_proven",
+      "iterations_per_repeat": 8,
+      "repeats": 5,
+      "median_ms": 7.6379478748549445,
+      "min_ms": 7.6131562500449945,
+      "max_ms": 7.653723999965223,
+      "samples_ms": [
+        7.6131562500449945,
+        7.6379478748549445,
+        7.653723999965223,
+        7.647687499911626,
+        7.617015624873602
+      ],
+      "effective_tflops": 6.747834417890527,
+      "flops_per_iteration": 51539607552,
+      "estimated_bytes": 301989888,
+      "validation": {
+        "sample_relative_l2_error": 0.003093494297582096,
+        "all_output_finite": true,
+        "sample_size": 16,
+        "reference": "original_FP32_inputs_computed_on_CPU_FP64",
+        "tolerance": 0.05,
+        "grad_a_sample_relative_l2_error": 0.0031730905263649693,
+        "grad_b_sample_relative_l2_error": 0.0030298066455007296,
+        "all_gradients_finite": true,
+        "passed": true
+      },
+      "status": "ok"
+    }
+  ],
+  "complete": true
+}
