@@ -28,3 +28,14 @@
 ## 最小交接包
 
 通常只需最新 PROGRESS.md + 本小节代码 + 相关输出。路线发生分歧时再附 ROADMAP.md，不必每次重贴完整聊天。
+
+<!-- LLM-LAB:p01-20260927-v1:BEGIN -->
+## 仓库接续补充（2026-09-27）
+
+项目仓库：`https://github.com/xdcgh/my-llm-lab`；分支约定为 `main`。
+每次用户先 commit 并 push，再提供分支和提交号。助手按 `notes/REPO_WORKFLOW.md`
+读取该版本的计划、进度、当前课程和实验记录；读取失败时使用经用户提供的 HEAD 归档，
+不编造远端内容。最新提交编号：待实际读取时填写。
+最近对话证据：`notes/learning_sessions/2026-09-27.md`。
+下次重点：P01 的循环训练，先解释 `w.grad = None` 与旧参数/新参数，不提前跳到 Transformer。
+<!-- LLM-LAB:p01-20260927-v1:END -->
