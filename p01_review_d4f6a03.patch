@@ -1,0 +1,285 @@
+diff --git a/PROGRESS.md b/PROGRESS.md
+index b65f16025c25e09a54ef0da5f9ca125b861ac0ca..363c71c832d8bc9e3b82fc484b2598318279b09f 100644
+--- a/PROGRESS.md
++++ b/PROGRESS.md
+@@ -1,64 +1,79 @@
+ # 学习进度：my-llm-lab
+ 
+-计划版本：v1.0  
+-创建日期：2026-09-26  
+-最后一次实际运行日期：尚未提供  
+-当前阶段：P00 环境与项目记录  
+-当前小节：P00.1 只读环境检查  
+-状态：计划已制定；等待用户首次运行反馈。**不能据此认定已完成环境配置或训练。**
++计划版本：v1.0
++本次核对日期：2026-09-27
++审阅依据：用户上传的 Git 归档，归档注释提交为 `d4f6a03e0c8ec49de1e8aa7468ee683be31b8b57`。
++当前阶段：**P01 一个参数怎么学习**
++当前小节：**P01.3 更新与清零：手写六次训练循环并核对理解**。
+ 
+-## 已确定的方向
++## 证据与边界
+ 
+-在 Mac 上亲自逐行学习，从随机初始化小模型到现代架构、性能优化、SFT、偏好优化、RL 和 Agent。先 PyTorch、后 MLX 对照；精确进度以本文件和实际运行证据为准。
++本次已能打开公开 GitHub 仓库首页；具体文件页、raw/API 抓取仍失败，因此逐行审阅以
++上传快照为准，尚未独立核对当前远端 `main` 是否仍指向上述提交。
++“代码存在”“运行记录存在”“用户手写完成”“概念验收通过”分别记录。
+ 
+ ## 当前环境
+ 
+-| 项目 | 当前记录 |
+-|---|---|
+-| 计划硬件 | Mac Studio，M1 Ultra，64GB；待环境输出核对 |
+-| macOS | 待检查 |
+-| Python 版本/路径/架构 | 待检查 |
+-| 项目目录 | 建议 `~/Code/my-llm-lab`，尚未确认创建 |
+-| 独立虚拟环境 | 尚未创建或确认 |
+-| PyTorch / MLX 版本 | 待检查；不借用现有 oMLX 环境 |
+-| MPS 构建/可用性标志 | 待检查 |
+-| CPU/MPS 实际前向反向测试 | 未执行或未提供证据 |
+-| Git commit | 暂无 |
++| 项目 | 已记录值 | 依据 |
++|---|---|---|
++| 硬件 | Apple M1 Ultra，GPU 48 核，64 GiB | 三份 MPS JSON 的 environment |
++| macOS / 架构 | 27.2 / arm64 | 同上 |
++| Python | 3.12.9，项目 `.venv` | 同上及 P01 JSON |
++| PyTorch | 2.14.0 | 同上及 P01 JSON |
++| NumPy | uv.lock 锁定 2.5.3；用户先前日志显示已安装 | uv.lock / 对话证据 |
++| 环境管理 | uv；不改动现有 oMLX 环境 | 项目约定 |
++| MPS | built / available 均为 true；三组矩阵测试 complete=true | 三份 MPS JSON |
++| 当前课程设备 | CPU / FP32 | P01 源码与 JSON |
+ 
+-## 本轮完成
++## 已有运行证据
+ 
+-总计划与交接模板已提供。没有 Mac 本机执行结果；没有训练、数据下载或 checkpoint。
++P00：`runs/mps_benchmark_20260926_*.json` 共三份；分别记录前向、包含反向及显式转换路径。
++其结果是当前算子路径的有效性能，不是芯片峰值或原生指令支持证明。
+ 
+-## 已理解的内容
++P01：`runs/p01_one_parameter_20260927_105647_955412.json` 已有六轮结果，配置为
++`x=2, target=6, initial_w=1, learning_rate=0.1, steps=6`。
++最后 `w=2.9998719692230225`，最后 loss 为 `6.556751941388939e-08`。
++这不表示用户已完成手写或通过概念验收。
+ 
+-待用户确认，不因助手已经解释过就自动填写。既往接触过的主题不等同于这次项目已验收。
++助手另在隔离的 Linux CPU 环境（Python 3.13.5 / PyTorch 2.10.0+cpu）重跑快照中的
++原课程脚本，六步正常完成，逐步梯度与解析式一致、loss 下降。它不是用户 Mac 的新增实测。
+ 
+-## 当前相关文件、函数或代码段
++## 当前文件
+ 
+-`lessons/P00_environment.md`：只读诊断命令。
++- 参考实现：`lessons/p01_train_one_parameter.py`。
++- 单次更新例子：`lessons/02_one_parameter.py`。
++- 手写目标：`lessons/p01_handwritten.py`，本次补丁**不创建**该文件，留给用户手写。
++- 本轮审阅说明：`notes/learning_sessions/2026-09-27-p01-review.md`。
+ 
+-## 最近运行命令与结果
++## 理解与待核对问题
+ 
+-尚未提供。下一轮粘贴完整相关输出，不包含密钥、令牌或私人数据。
++用户正在巩固“预测 → loss → 梯度 → 更新”的关系，不将解释过或运行过自动记为掌握。
++重点核对：
+ 
+-## 卡点 / 未解决问题
++1. `w.grad = None` 只清掉旧梯度，为何不把 w 重设为 1？
++2. `loss.backward()` 后参数是否已经改变？真正更新参数的是哪一行？
++3. `old_w = w.item()` 与 `old_w = w` 为什么不同？
++4. 更新后为何重新计算 new_loss，旧 loss 为什么不会自动刷新？
++5. `with torch.no_grad()` 为什么不等于冻结参数？
+ 
+-需要知道本机 macOS 与实际 Python 架构、路径、版本，才能选择兼容的独立环境。
++本轮答疑：返回值接口与输出参数接口、FMA、稠密/稀疏运算及厂商支持范围。
++这些记录为“已讲解”，尚无用户逐项理解确认。
+ 
+-## 下一步唯一任务
++## 下一步唯一执行任务
+ 
+-运行 `lessons/P00_environment.md` 的检查命令，把输出交给助手分析。先不安装大型依赖、不启动训练、不修改现有 oMLX。
++用户手写同一单参数训练循环，建议另存 `lessons/p01_handwritten.py`，
++运行 `uv run python lessons/p01_handwritten.py`，提交并推送代码与实际输出。
++保留原参考实现与已有运行记录；不要开始 P02 或同时更换模型、数据与框架。
+ 
+-## 后续更新规则
++手写核对后，沿 ROADMAP 的 P01.3 只改变学习率做对照，再理解优化器封装。
++之后才进入 P02.1 字符编码。改变 x、target、初值或轮数时，注意原参考实现的
++JSON config 中有写死的值，必须同步记录；本次补丁不修改该代码。
+ 
+-每次记录：小节编号、实际改动、运行命令、输出/指标、用户已确认理解的内容、待解决问题及下一步。必须明确区分“代码已给出”和“用户已经跑通”。
++## 历史保留
+ 
+-<!-- LLM-LAB:p01-20260927-v1:BEGIN -->
+-## 2026-09-27 对话证据补充（不是远端代码审阅）
++本次更新前的 PROGRESS 原文保存在
++`notes/learning_sessions/2026-09-27-progress-before-d4f6a03-review.md`。
++它保留初始化及上一轮追加内容，不再作为当前状态。
+ 
+-见 `notes/learning_sessions/2026-09-27.md`。用户日志已证明 P00 基础 CPU/MPS 检查与首轮
+-精度测试完成。P01 仍在理解参数、梯度及训练循环；本次新增循环脚本尚待用户运行与验收。
+-最新远端提交未知，不把脚本应用或代码出现自动标为课程完成。
+-下一步候选：`uv run python lessons/p01_train_one_parameter.py`。
+-此条是有日期的记录，不应覆盖此文件中时间更晚、证据更充分的进度。
+-<!-- LLM-LAB:p01-20260927-v1:END -->
++每轮以最新实际证据更新此文件，并保持：未 push 的本地内容不能视为远端可见；
++无论何种工具，未实际写入就不能说已更新用户本机或 GitHub 文件。
+diff --git a/README.md b/README.md
+index 5c7a77836aa31ad30e1d80da289ef48582379d48..c05809abebb77d8d071ce99de2ea7e6fbfa3bd49 100644
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,16 @@
+-# my-llm-lab 起步包
++# my-llm-lab
++
++## 当前入口（2026-09-27 快照审阅后更新）
++
++P00 已有运行证据；P01 已有参考代码的六次训练记录，当前要做的是用户手写与概念核对。
++请以 `PROGRESS.md` 的最新摘要为准。参考代码是 `lessons/p01_train_one_parameter.py`；
++手写目标建议为 `lessons/p01_handwritten.py`，此文档补丁不会替用户创建它。
++
++以下“起步包”说明是最初交付时的历史介绍，不代表仍在等待首次环境检查。
++
++---
++
++# 初始起步包说明（历史）
+ 
+ 这是一个逐行学习大模型的长期项目计划，版本 v1.0（2026-09-26），不是已经训练好的模型，也不是一键训练脚本。
+ 
+diff --git a/notes/learning_sessions/2026-09-27-p01-review.md b/notes/learning_sessions/2026-09-27-p01-review.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..9afdea36ef9c831d597a7727a731468814f8be12
+--- /dev/null
++++ b/notes/learning_sessions/2026-09-27-p01-review.md
+@@ -0,0 +1,62 @@
++# 2026-09-27：快照审阅与 P01 手写安排
++
++## 本轮来源
++
++用户上传 `my-llm-lab-snapshot.zip`。ZIP 注释：
++`d4f6a03e0c8ec49de1e8aa7468ee683be31b8b57`。
++归档 SHA-256：
++`646280d9250375c3865f23bc0ca6a8d84d8906a09c8c86e7e99c72d7b26a9c99`。
++GitHub 首页本次可以读取；具体文件与 API 未抓取成功，未独立确认远端 HEAD。
++
++## 快照支持的结论
++
++已查看 ROADMAP 中 P01/P02 对应段落、PROGRESS、HANDOFF、AGENTS、
++REPO_WORKFLOW、P01 代码、单步代码、三份 MPS JSON、一份 P01 JSON及依赖配置。
++P01 六步循环实现没有发现阻止默认例子运行的问题。JSON 显示最终 w 为
++2.9998719692230225，loss 为 6.556751941388939e-08。
++PROGRESS 原文顶部却仍停留 P00.1，本轮明确修订当前摘要并保留旧文，而不是假装旧文没有矛盾。
++
++原代码 JSON config 的 x、target、initial_w 和 steps 写死在存档部分；修改这些实验设置时
++需要同步修改记录，或下一轮再抽取变量。本轮只做教学，不为这一点改写参考代码。
++
++## 独立验证边界
++
++助手在临时目录复制并执行原 P01 脚本，未执行仓库中的更新工具。
++环境为 Linux CPU / Python 3.13.5 / PyTorch 2.10.0+cpu，不是 Mac / MPS。
++验证六步完成，解析梯度 8w-24 与输出一致，loss 逐步下降，最后 w 接近 3。
++
++## 本轮知识结论
++
++- `result = torch.mm(a, b)` 和 `torch.mm(a, b, out=buffer)` 都在调用函数；
++  一个接收返回对象，另一个显式提供结果存储位置。后者也可以返回结果张量。
++- 输出参数接口不是 PyTorch 新发明；BLAS 的 DGEMM 就使用传入的 C 数组接收/更新结果。
++  这只是一条有文献依据的历史脉络，不是“最早发明者”结论。
++- `out=` 与修改某个输入的原地操作不同，不能把它们简单视为一回事。
++- FMA = Fused Multiply-Add，融合乘加，表达 a*b+c；重点是中间乘积不单独舍入，最终只舍入一次。
++  一个标量 FMA 按常见 FLOP 计数是两个操作，不等于必定一个时钟周期。
++- 稀疏矩阵包含大量零；含零的普通稠密张量不自动获得稀疏加速。
++- 2:4 结构化稀疏要求规定分组中至少两个零，还需要适当压缩、内核和硬件；
++  标称两倍常按同尺寸稠密问题的等效运算量比较，不代表全部模型速度翻倍。
++- 稀疏运算不是 NVIDIA 独有。AMD CDNA4 有明确的稠密/稀疏峰值；昇腾 Ascend C 有受限
++  INT8 4:2 Sparse Matmul 文档；Intel oneMKL 有 CPU/GPU 稀疏接口；Apple Accelerate
++  有稀疏线性代数库。这几类证据并不意味着所有芯片、精度都具备相同的硬件 2:4 加速。
++
++## 接下来
++
++先手写现有例子的核心循环，存档 API 可稍后阅读，不直接进入完整语言模型。
++参考实现保留；用户手写文件与运行输出才是下次逐行审阅对象。
++一次只改变一个因素。理解梯度清零与参数更新之后，再按 ROADMAP 进行学习率对照。
++
++## 官方资料
++
++- PyTorch out 语义：https://docs.pytorch.org/docs/2.14/notes/out.html
++- PyTorch mm：https://docs.pytorch.org/docs/2.14/generated/torch.mm.html
++- BLAS DGEMM：https://netlib.org/lapack/explore-html/dd/d09/group__gemm_ga1e899f8453bcbfde78e91a86a2dab984.html
++- C++ Core Guidelines F.20：https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-out
++- NVIDIA FMA：https://docs.nvidia.com/cuda/floating-point/index.html
++- NVIDIA 2:4：https://developer.nvidia.com/blog/accelerating-inference-with-sparsity-using-ampere-and-tensorrt/
++- AMD MI350：https://rocmdocs.amd.com/en/latest/reference/gpu-arch/mi350.html
++- 华为 4:2：https://www.hiascend.com/document/detail/zh/CANNCommunityEdition/82RC1/opdevg/Ascendcopdevg/atlas_ascendc_10_10021.html
++- Intel Sparse BLAS：https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-dpcpp/2026-0/overview-of-intel-oneapi-math-kernel-library.html
++- Apple Sparse Solvers：https://developer.apple.com/documentation/accelerate/sparse-solvers-library
++- PyTorch 梯度清零：https://docs.pytorch.org/tutorials/recipes/recipes/zeroing_out_gradients.html
+diff --git a/notes/learning_sessions/2026-09-27-progress-before-d4f6a03-review.md b/notes/learning_sessions/2026-09-27-progress-before-d4f6a03-review.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..7e5b7b2f5af4ee77291e80c7b1d9874cb51a5953
+--- /dev/null
++++ b/notes/learning_sessions/2026-09-27-progress-before-d4f6a03-review.md
+@@ -0,0 +1,64 @@
++# 学习进度：my-llm-lab
++
++计划版本：v1.0
++创建日期：2026-09-26
++最后一次实际运行日期：尚未提供
++当前阶段：P00 环境与项目记录
++当前小节：P00.1 只读环境检查
++状态：计划已制定；等待用户首次运行反馈。**不能据此认定已完成环境配置或训练。**
++
++## 已确定的方向
++
++在 Mac 上亲自逐行学习，从随机初始化小模型到现代架构、性能优化、SFT、偏好优化、RL 和 Agent。先 PyTorch、后 MLX 对照；精确进度以本文件和实际运行证据为准。
++
++## 当前环境
++
++| 项目 | 当前记录 |
++|---|---|
++| 计划硬件 | Mac Studio，M1 Ultra，64GB；待环境输出核对 |
++| macOS | 待检查 |
++| Python 版本/路径/架构 | 待检查 |
++| 项目目录 | 建议 `~/Code/my-llm-lab`，尚未确认创建 |
++| 独立虚拟环境 | 尚未创建或确认 |
++| PyTorch / MLX 版本 | 待检查；不借用现有 oMLX 环境 |
++| MPS 构建/可用性标志 | 待检查 |
++| CPU/MPS 实际前向反向测试 | 未执行或未提供证据 |
++| Git commit | 暂无 |
++
++## 本轮完成
++
++总计划与交接模板已提供。没有 Mac 本机执行结果；没有训练、数据下载或 checkpoint。
++
++## 已理解的内容
++
++待用户确认，不因助手已经解释过就自动填写。既往接触过的主题不等同于这次项目已验收。
++
++## 当前相关文件、函数或代码段
++
++`lessons/P00_environment.md`：只读诊断命令。
++
++## 最近运行命令与结果
++
++尚未提供。下一轮粘贴完整相关输出，不包含密钥、令牌或私人数据。
++
++## 卡点 / 未解决问题
++
++需要知道本机 macOS 与实际 Python 架构、路径、版本，才能选择兼容的独立环境。
++
++## 下一步唯一任务
++
++运行 `lessons/P00_environment.md` 的检查命令，把输出交给助手分析。先不安装大型依赖、不启动训练、不修改现有 oMLX。
++
++## 后续更新规则
++
++每次记录：小节编号、实际改动、运行命令、输出/指标、用户已确认理解的内容、待解决问题及下一步。必须明确区分“代码已给出”和“用户已经跑通”。
++
++<!-- LLM-LAB:p01-20260927-v1:BEGIN -->
++## 2026-09-27 对话证据补充（不是远端代码审阅）
++
++见 `notes/learning_sessions/2026-09-27.md`。用户日志已证明 P00 基础 CPU/MPS 检查与首轮
++精度测试完成。P01 仍在理解参数、梯度及训练循环；本次新增循环脚本尚待用户运行与验收。
++最新远端提交未知，不把脚本应用或代码出现自动标为课程完成。
++下一步候选：`uv run python lessons/p01_train_one_parameter.py`。
++此条是有日期的记录，不应覆盖此文件中时间更晚、证据更充分的进度。
++<!-- LLM-LAB:p01-20260927-v1:END -->
