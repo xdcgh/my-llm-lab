@@ -1,10 +1,13 @@
 # my-llm-lab
 
-## 当前入口（2026-09-27 快照审阅后更新）
+## 当前入口（2026-10-01 本地连接核对后更新）
 
-P00 已有运行证据；P01 已有参考代码的六次训练记录，当前要做的是用户手写与概念核对。
-请以 `PROGRESS.md` 的最新摘要为准。参考代码是 `lessons/p01_train_one_parameter.py`；
-手写目标建议为 `lessons/p01_handwritten.py`，此文档补丁不会替用户创建它。
+P00 已有运行证据；手写 `lessons/mycode/train_one_parameter.py` 的 20 次更新已有对话截图。
+当前 P01.3：学习率对照脚本已保存为 `lessons/p01_learning_rates.py`，运行结果待核对。
+从项目根目录执行 `uv run python lessons/p01_learning_rates.py`；不按旧示例误用 mycode 路径。
+请以 `PROGRESS.md` 为当前摘要；跨聊天入口为 `HANDOFF.md`。
+插件可用时直接读取已保存的本地项目，无需先 push；GitHub 继续承担版本备份与后备读取。
+本机接续协议见 `notes/REPO_WORKFLOW.md`；代码已运行不等于概念已掌握。
 
 以下“起步包”说明是最初交付时的历史介绍，不代表仍在等待首次环境检查。
 

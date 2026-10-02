@@ -1,6 +1,22 @@
 # 新聊天交接模板
 
-将下面内容和最新 `PROGRESS.md`、正在讨论的代码、相关日志一起提供给新聊天。不要只给本机绝对路径。
+## 首选：直接读取已授权的本地项目（2026-10-01）
+
+在新聊天中可发送：
+
+> 继续我的 my-llm-lab。请使用 Desktop Commander Remote 连接 Mac-Studio.local，
+> 读取 /Users/xudacheng/Downloads/my-llm-lab 的 AGENTS.md、PROGRESS.md、HANDOFF.md、
+> 当前课程和相关 runs/，检查 Git 状态后按进度接续。保持逐行教学；同步学习记录，
+> 不自动改训练代码或 commit/push。
+
+前提是插件可调用、目标设备在线且已授权。助手必须实际读取，不能只凭路径或旧记忆回答。
+本地文件需先保存；不要求先 commit/push。当前步骤只看最新 PROGRESS.md，不在模板中固定旧进度。
+完整规则见 notes/REPO_WORKFLOW.md。不会后台自动监控，也不会无限扩展上下文。
+
+## 后备：连接不可用时
+
+提供已 push 的仓库版本，或将最新 PROGRESS.md、课程代码和日志作为附件提供。
+下面的详细模板保留给后备方式使用。
 
 ---
 
@@ -30,12 +46,12 @@
 通常只需最新 PROGRESS.md + 本小节代码 + 相关输出。路线发生分歧时再附 ROADMAP.md，不必每次重贴完整聊天。
 
 <!-- LLM-LAB:p01-20260927-v1:BEGIN -->
-## 仓库接续补充（2026-09-27）
+## GitHub 后备接续补充（建立于 2026-09-27，2026-10-01 更新）
 
 项目仓库：`https://github.com/xdcgh/my-llm-lab`；分支约定为 `main`。
-每次用户先 commit 并 push，再提供分支和提交号。助手按 `notes/REPO_WORKFLOW.md`
+仅采用 GitHub 路径时，用户先 commit 并 push，再提供分支和提交号。助手按 `notes/REPO_WORKFLOW.md`
 读取该版本的计划、进度、当前课程和实验记录；读取失败时使用经用户提供的 HEAD 归档，
 不编造远端内容。最新提交编号：待实际读取时填写。
-最近对话证据：`notes/learning_sessions/2026-09-27.md`。
-下次重点：P01 的循环训练，先解释 `w.grad = None` 与旧参数/新参数，不提前跳到 Transformer。
+最近本地核对：`notes/learning_sessions/2026-10-01-local-sync.md`。
+下次重点按最新 PROGRESS.md；本次核对时为 P01.3 学习率对照待运行与验收。
 <!-- LLM-LAB:p01-20260927-v1:END -->
